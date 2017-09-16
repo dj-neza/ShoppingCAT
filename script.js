@@ -9,6 +9,17 @@ function api() {
 	    });
 	
 }
+function simil() {
+	var sku = "PC721D05G-Q11";
+	var url = "http://www.fashwell.com/api/hackzurich/v1/similarity/";
+	url += sku;
+	url += "/";
+	var client = new HttpClient();
+    	client.get(url, function(response) {
+        	var object = JSON.parse(response);
+        	console.log(object);
+        });
+}
 
 var HttpClient = function() {
 	this.post = function(imgurl, callBack) {
@@ -33,6 +44,17 @@ var HttpClient = function() {
 	        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 	        //xhr.onload = requestComplete;
 	        xhr.send(JSON.stringify(params));
+	}
+	this.get = function(url, callBack) {
+		var access_token = "d7881ccfab3d97615a8989ff1e9f00c170f94e8a";
+	        var xhr = new XMLHttpRequest();
+	        xhr.onreadystatechange = function() {
+	            if (xhr.readyState == 4 && xhr.status == 200)
+	                callBack(xhr.responseText);
+	        }
+	        xhr.open( "GET", url, true );
+	        xhr.setRequestHeader('Authorization', 'Token ' + access_token);
+	        xhr.send( null );
 	}
 }
 
@@ -64,8 +86,15 @@ function returnProduct(object) {
 	document.getElementById("shop").innerHTML += shop;
 	document.getElementById("url").innerHTML += product;
 	document.getElementById("productimg").src += image;
-
 }
+
+/*
+return similars: 
+	len = Object.keys(object.similar_products).length;
+	object.similar_products[1-len] -- 0 je vecinoma sam produkt
+	posamezni podatki naprej isto .sku/.title itd
+
+*/
 
 
 
