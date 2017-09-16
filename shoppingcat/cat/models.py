@@ -5,8 +5,8 @@ from django.utils import timezone
 class Clothing(models.Model):
 	name = models.TextField()
 	category = models.TextField()
-	productURL = models.URLField()
-	imageURL = models.URLField()
+	productURL = models.URLField(max_length=500)
+	imageURL = models.URLField(max_length=500)
 	price = models.FloatField()
 	SKUcode = models.TextField()
 

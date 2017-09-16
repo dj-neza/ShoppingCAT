@@ -6,12 +6,21 @@ from django.shortcuts import redirect
 from .forms import *
 
 
+def get_user_data(user):
+	clothes = MyClothing.objects.filter(user=user)
+	recommendations = Recommendation.objects.filter(user=user)
+	inspirations = Inspiration.objects.filter(user=user)
+	return clothes, recommendations, inspirations
+
 @csrf_protect
 def home(request):
 	
 	# user is signed in
 	if request.user.is_authenticated():
-		return render(request, 'index.html', {'name': request.user.first_name})
+		user = User.objects.get(username=request.user.username)
+		c, r, i = get_user_data(user)
+		
+		return render(request, 'index.html', {'name': request.user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 	# user not signed in
 	else:
@@ -25,7 +34,11 @@ def index(request):
 
 	# user is already signed in
 	if request.user.is_authenticated():
-		return render(request, 'index.html', {'name': request.user.first_name})
+		user = User.objects.get(username=request.user.username)
+		c, r, i = get_user_data(user)
+		for ind in i:
+			print(ind)
+		return render(request, 'index.html', {'name': request.user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 	else:
 		if request.method == "POST":
@@ -38,7 +51,9 @@ def index(request):
 				user = authenticate(username=username, password=password)
 				if user is not None:
 					login(request, user)
-					return render(request, 'index.html', {'name': user.first_name})
+					user = User.objects.get(username=request.user.username)
+					c, r, i = get_user_data(user)
+					return render(request, 'index.html', {'name': user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 		else:
 			form = SignIn()

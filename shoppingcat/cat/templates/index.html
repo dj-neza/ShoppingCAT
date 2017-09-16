@@ -113,7 +113,7 @@ body {
 <body background="{% static 'Untitled-1.png' %}">
 
 <div id="mySidenav" class="sidenav">
-    <p>Hello, {{ name }}</p>
+    <p>Hello, {{name}}</p>
   <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>--><br><br><br>
   <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
   <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
@@ -128,9 +128,19 @@ body {
 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <div id="main">
 
-  <div id="myCloset" class="overlay_content w3-twothird"></div>
-  <div id="myRecs" class="overlay_content w3-twothird"></div>
-  <div id="myInsps" class="overlay_content w3-twothird">
+    <div id="myCloset" style="margin-left:400px;" class="overlay_content w3-twothird">
+        {% for c in clothes %}
+            <p>{{c.name}}</p>
+            <img src="{{c.imageURL}}"/>
+        {% endfor %}
+  </div>
+  <div id="myRecs" style="margin-left:400px;" class="overlay_content w3-twothird">
+        {% for r in recommendations %}
+            <p>{{r.name}}</p>
+            <img src="{{r.imageURL}}"/>
+        {% endfor %}
+  </div>
+  <div id="myInsps" style="margin-left:400px;" class="overlay_content w3-twothird">
         <p class="w3-container" style="margin-left: 40%"><input id="picture" type="text">
         <button onclick="api()">ANALYZE</button>
         <div id="productName">Product name: </div>
@@ -141,7 +151,11 @@ body {
         <div id="shop">Shop: </div>
         <div id="url">Product url: </div>
         <img id="productimg">
-        <button onclick="simil()">SHOW SIMILAR</button>   </p>   
+        <button onclick="simil()">SHOW SIMILAR</button>   </p>
+        {% for i in inspirations %}
+            <p>mjaw</p>
+            <img src="{{i.image}}"/>
+        {% endfor %}
   </div>
 </div>
 </body>
