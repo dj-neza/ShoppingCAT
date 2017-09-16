@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import *
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .serializers import MyClothingSerializer, RecommendationSerializer, InspirationSerializer
@@ -17,6 +20,22 @@ class CreateView(generics.ListCreateAPIView):
         """Save the post data when creating a new bucketlist."""
         serializer.save()
 
+class InspirationList(APIView):
+    """
+    List all snippets, or create a new snippet.
+    """
+    def get(self, request, format=None):
+        insps = Inspiration.objects.all()
+        serializer = InspirationSerializer(insps, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializer = InspirationSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # DOBIS INSPIRATION PREK ID-JA
 @csrf_exempt
 def inspirations_detail(request, pk):
@@ -30,7 +49,7 @@ def inspirations_detail(request, pk):
 		serializer = InspirationSerializer(inspiration)
 		return JsonResponse(serializer.data)
 
-# API ZA DOBIT INSPIRATIONE
+# API ZA DOBIT INSPIRATIONE PREK USERJA
 @csrf_exempt
 def inspirations_user(request, username):
 
@@ -41,13 +60,15 @@ def inspirations_user(request, username):
     	return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-
-        serializer = SnippetSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+    	#print(request.body)
+    	user = User.objects.get(username=username)
+    	image = FileUploadParser().parse(request.body)
+    	insp = Inspiration(user=user, image=image)
+    	serializer = InspirationSerializer(insp)
+    	if serializer.is_valid():
+    		serializer.save()
+    		return JsonResponse(serializer.data, status=201)
+    	return JsonResponse(serializer.errors, status=400)
 
 
 # API ZA DODAJANJE INSPIRATIONA
