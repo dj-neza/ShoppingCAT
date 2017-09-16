@@ -25,7 +25,6 @@ class Inspiration(models.Model):
 	user = models.ForeignKey('auth.User')
 	image = models.FileField(upload_to='inspirations/')
 
-
 class Recommendation(Clothing):
 	user = models.ForeignKey('auth.User')
 	inspiration = models.ForeignKey('Inspiration')

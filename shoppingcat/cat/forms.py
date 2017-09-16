@@ -19,12 +19,10 @@ class SignIn(forms.Form):
 			raise forms.ValidationError("Incorrect username or password")
 		return self.cleaned_data
 
-class LoadInspirationImage(forms.Form):
-	image = forms.FileField()
-	name = forms.CharField(required=False)
-	category = forms.CharField(required=False)
-	productURL = forms.URLField(required=False)
-	imageURL = forms.URLField(required=False)
-	price = forms.FloatField(required=False)
-	SKUcode = forms.CharField(required=False)
+class LoadInspirationImage(forms.ModelForm):
+	class Meta: 
+		model = Inspiration
+		fields = [
+			'image'
+		]
 

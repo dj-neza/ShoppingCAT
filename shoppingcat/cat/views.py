@@ -61,11 +61,18 @@ def loadInspirationImage(request):
 		if form.is_valid():
 			cl = form.cleaned_data
 			print(cl)
-			#newInsp = form.save(commit=False)
-			#newInsp.user = request.user;
-			#newInsp.save()
+			newInsp = form.save(commit=False)
+			newInsp.user = request.user;
+			newInsp.save()
 		else:
-			print("Photo not saved ")		
+			print("Photo not saved ")	
+
 	return render(request, 'loadInspirationImage.html', {'form': form, 'name': request.user.first_name})
+
+# get inspirations and return list of inspirations
+def loadRecs(request):
+	inspirations = Inspiration.objects.all()
+
+	
 
 
