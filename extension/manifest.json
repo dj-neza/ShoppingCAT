@@ -1,0 +1,18 @@
+{
+  "name": "ShoppingCAT",
+  "version": "1.3",
+  "description": "Screenshot and crop image & add it to your inspirations in ShoppingCAT. :)",
+  "background": {
+    "persistent": false,
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "camera.png",
+    "default_title": "Screenshot your inspirations!"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}
