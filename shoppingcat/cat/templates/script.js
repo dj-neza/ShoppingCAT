@@ -78,14 +78,14 @@ function returnProduct(object) {
 			product = object.products[i].instances[j].product_url;
 		}
 	}
-	document.getElementById("productName").innerHTML += productName;
-	document.getElementById("category").innerHTML += category;
-	document.getElementById("sku").innerHTML += sku;
-	document.getElementById("price").innerHTML += price;
-	document.getElementById("brand").innerHTML += brand;
-	document.getElementById("shop").innerHTML += shop;
-	document.getElementById("url").innerHTML += product;
-	document.getElementById("productimg").src += image;
+	document.getElementById("id_productName").innerHTML += productName;
+	document.getElementById("id_category").innerHTML += category;
+	document.getElementById("id_sku").innerHTML += sku;
+	document.getElementById("id_price").innerHTML += price;
+	document.getElementById("id_brand").innerHTML += brand;
+	document.getElementById("id_shop").innerHTML += shop;
+	document.getElementById("id_url").innerHTML += product;
+	document.getElementById("id_productimg").src += image;
 }
 
 /*

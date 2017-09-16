@@ -52,3 +52,20 @@ def log_out(request):
 		logout(request)
 
 	return redirect('index')
+
+# inspiration load image
+def loadInspirationImage(request):
+	form = LoadInspirationImage()
+	if request.method == 'POST':
+		form = LoadInspirationImage(request.POST, request.FILES)
+		if form.is_valid():
+			cl = form.cleaned_data
+			print(cl)
+			#newInsp = form.save(commit=False)
+			#newInsp.user = request.user;
+			#newInsp.save()
+		else:
+			print("Photo not saved ")		
+	return render(request, 'loadInspirationImage.html', {'form': form, 'name': request.user.first_name})
+
+
