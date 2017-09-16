@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="icon" href="{% static 'logo_kvadraten_majhena.png' %}">
     <script src="script.js"></script>
 
 	<script>
@@ -18,7 +19,7 @@ function on_closet() {
 }
 
 function on_rec() {
-	document.getElementById("myRecs").style.display = "none";
+	document.getElementById("myInsps").style.display = "none";
 	document.getElementById("myCloset").style.display = "none";
     document.getElementById("myRecs").style.display = "block";
 }
@@ -35,6 +36,14 @@ function off() {
 	document.getElementById("myInsps").style.display = "none";
 }
 
+function div_hide(id){
+    document.getElementById(id).style.display = "none";
+}
+
+function div_show(id) {
+    document.getElementById(id).style.display = "block";
+}
+
 	</script>
 
 	<style>
@@ -42,7 +51,7 @@ function off() {
 /* The side navigation menu */
 .sidenav {
     height: 100%; /* 100% Full-height */
-    width: 350px; /* 0 width - change this with JavaScript */
+    width: 30%; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 0;
@@ -98,12 +107,56 @@ body {
 .overlay_content {
 	position: fixed; /* Sit on top of the page content */
     display: none; /* Hidden by default */
-    width: 100%; /* Full width (cover the whole page) */
+    width: 70%; /* Full width (cover the whole page) */
     height: 60%; /* Full height (cover the whole page) */
     top: 20%;
+    right: 0%;
     background-color: rgba(255,255,255,0.8); /* Black background with opacity */
     z-index: 0; /* Specify a stack order in case you're using a different order for other elements */
     cursor: pointer; /* Add a pointer on hover */
+}
+.overlay_content2 {
+    position: fixed; /* Sit on top of the page content */
+    width: 70%; /* Full width (cover the whole page) */
+    height: 60%; /* Full height (cover the whole page) */
+    top: 20%;
+    right: 0%;
+    background-color: rgba(255,255,255,0.8); /* Black background with opacity */
+    z-index: 0; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+.pop {
+    width:100%;
+    height:100%;
+    opacity:.95;
+    top:0;
+    left:0;
+    display: none;
+    position:fixed;
+    background-color:#313131;
+    overflow:auto;
+    z-index: 10;
+}
+.close {
+    position:absolute;
+    right: 5px;
+    top: 5px;
+    cursor:pointer;
+    height: 20px;
+    width: 20px;
+}
+.icon {
+    cursor:pointer;
+    margin-left:5px;
+    height: 15px;
+    width: 15px;
+}
+.popups {
+    position:absolute;
+    left:30%;
+    top:17%;
+    max-width: 70%;
 }
 
 </style>
@@ -113,12 +166,12 @@ body {
 <body background="{% static 'Untitled-1.png' %}">
 
 <div id="mySidenav" class="sidenav">
-    <p>Hello, {{name}}</p>
+    <div align="center"><img src="{% static 'logo_blue_napis.png' %}" style="width: 80%;">
+    <p>Hello, {{name}}</p></div>
   <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>--><br><br><br>
-  <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
   <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
-  <a href="#" onclick="on_rec()" class="my_recs">My Recommendations</a>
-  <a href="#" onclick="on_inspiration()" class="my_inspirations">My Inspirations</a>
+  <a href="#" onclick="on_rec()" class="my_recs">Wishlist</a>
+  <a href="#" onclick="on_inspiration()" class="my_inspirations">Inspiration</a>
   <a href="{% url 'log_out' %}">Log out</a>
 </div>
 
@@ -128,35 +181,91 @@ body {
 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <div id="main">
 
-    <div id="myCloset" style="margin-left:400px;" class="overlay_content w3-twothird">
+    <div id="myCloset" align="center" style="white-space: nowrap; overflow-x: scroll;" class="overlay_content2">
         {% for c in clothes %}
-            <p>{{c.name}}</p>
-            <img src="{{c.imageURL}}"/>
+            <div style="display:inline-block; min-width: 35%; background-color: white; margin: 5px; padding: 5px; margin-top: 6%;">
+                <div style="text-decoration-color: #34AE95; white-space: initial;">{{c.name}}</div>
+                <img src="{{c.imageURL}}"/>
+            </div>
         {% endfor %}
   </div>
-  <div id="myRecs" style="margin-left:400px;" class="overlay_content w3-twothird">
+  <div id="myRecs" align="center" style="white-space: nowrap; overflow-x: scroll;" class="overlay_content">
         {% for r in recommendations %}
-            <p>{{r.name}}</p>
-            <img src="{{r.imageURL}}"/>
+            <div style="display:inline-block; min-width: 35%; background-color: white; margin: 5px; padding: 5px; margin-top: 6%;">
+                <div style="text-decoration-color: #34AE95; white-space: initial;">{{r.name}}</div>
+                <div><img src="{{r.imageURL}}"/></div>
+                <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                <button id="{{r.sku}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="div_show('pop1')">SHOW SIMILAR</button>
+            </div>
         {% endfor %}
   </div>
-  <div id="myInsps" style="margin-left:400px;" class="overlay_content w3-twothird">
-        <p class="w3-container" style="margin-left: 40%"><input id="picture" type="text">
-        <button onclick="api()">ANALYZE</button>
-        <div id="productName">Product name: </div>
-        <div id="category">Category: </div>
-        <div id="sku">Sku: </div>
-        <div id="price">Price: </div>
-        <div id="brand">Brand: </div>
-        <div id="shop">Shop: </div>
-        <div id="url">Product url: </div>
-        <img id="productimg">
-        <button onclick="simil()">SHOW SIMILAR</button>   </p>
+  <div id="myInsps" class="overlay_content">
+        <div align="center" style="white-space: nowrap; overflow-x: scroll;">
         {% for i in inspirations %}
-            <p>mjaw</p>
-            <img src="{{i.image}}"/>
+            <div style="display:inline-block; min-width: 35%; background-color: white; margin: 5px; padding: 5px; margin-top: 6%;">
+                <img src="{{i.image}}" style="max-width: 30%;"/>
+                <div><button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="div_show('pop2')">STYLE ME LIKE THIS</button></div>
+            </div>
         {% endfor %}
+        </div>
+        <div style="margin: 5px;">
+        <input id="picture" type="text">
+        <button onclick="api()"  style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;">ADD INSPIRATION </button>
+        </div>
   </div>
+
+    <div align="center">
+        <div class="pop" id="pop1">
+                <div class="popups col-5 col-m-7" style="background-color: #34AE95; padding: 5px; max-width: 60%;" id="popups10">
+                  {% csrf_token %}
+                    <img src='{% static "close.png" %}' alt="Close" class="close" onclick ="div_hide('pop1')">
+                    <h2>Similar items</h2>
+                    <hr>
+                    <div style="white-space: nowrap; overflow-x: scroll;">
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="pop" id="pop2">
+                <div class="popups col-5 col-m-7" style="background-color: #34AE95; padding: 5px; max-width: 60%;" id="popups10">
+                  {% csrf_token %}
+                    <img src='{% static "close.png" %}' alt="Close" class="close" onclick ="div_hide('pop2')">
+                    <h2>Style recommendations</h2>
+                    <hr>
+                    <div style="white-space: nowrap; overflow-x: scroll;">
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                        <div style="display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;">
+                            <div style="text-decoration-color: #34AE95; white-space: initial;">ITEM</div>
+                            <div><img src='{% static "close.png" %}'/></div>
+                            <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 </div>
 </body>
 </html>
