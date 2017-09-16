@@ -28,5 +28,38 @@ body {
 
 <div id="main">
 </div>
+
+<form action="" method="POST">
+	{% csrf_token %}
+	<p>
+		{{ form.username.label }}
+		{{ form.username }} 
+	</p>
+				
+	<p>
+		{{ form.password.label }}
+		{{ form.password }}
+	</p>
+
+	{% if form.errors %}
+		{% for field in form %}
+		    {% for error in field.errors %}
+		        <div>
+		            <strong>{{ error|escape }}</strong>
+		        </div>
+		    {% endfor %}
+		{% endfor %}
+		{% for error in form.non_field_errors %}
+		    <div >
+		        <strong>{{ error|escape }}</strong>
+		    </div>
+		{% endfor %}
+	{% endif %}
+
+	<input type="submit" value="Sign in" />
+				
+</form>
+
+
 </body>
 </html>
