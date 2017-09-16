@@ -2,9 +2,30 @@ from django.db import models
 from django.utils import timezone
 
 # Create your models here.
-class MyClothes(models.Model):
+class Clothing(models.Model):
 	name = models.TextField()
-	user = models.ForeignKey('auth.User')
+	category = models.TextField()
+	productURL = models.URLField()
+	imageURL = models.URLField()
+	price = models.FloatField()
+	SKUcode = models.TextField()
+
+	class Meta:
+		abstract = True
 
 	def __str__(self):
 		return self.name
+
+
+class MyClothing(Clothing):
+	user = models.ForeignKey('auth.User')
+
+
+class Inspiration(models.Model):
+	user = models.ForeignKey('auth.User')
+	image = models.FileField(upload_to='inspirations/')
+
+
+class Recommendation(Clothing):
+	user = models.ForeignKey('auth.User')
+	inspiration = models.ForeignKey('Inspiration')
