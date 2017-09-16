@@ -5,7 +5,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<script src="jquery-3.2.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
 
 	<script>
 
@@ -128,7 +129,19 @@ body {
 
   <div id="myCloset" class="overlay_content w3-twothird"></div>
   <div id="myRecs" class="overlay_content w3-twothird"></div>
-  <div id="myInsps" class="overlay_content w3-twothird"></div>
+  <div id="myInsps" class="overlay_content w3-twothird">
+        <p class="w3-container" style="margin-left: 40%"><input id="picture" type="text">
+        <button onclick="api()">ANALYZE</button>
+        <div id="productName">Product name: </div>
+        <div id="category">Category: </div>
+        <div id="sku">Sku: </div>
+        <div id="price">Price: </div>
+        <div id="brand">Brand: </div>
+        <div id="shop">Shop: </div>
+        <div id="url">Product url: </div>
+        <img id="productimg">
+        <button onclick="simil()">SHOW SIMILAR</button>   </p>   
+  </div>
 </div>
 </body>
 </html>
