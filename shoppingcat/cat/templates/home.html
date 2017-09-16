@@ -42,7 +42,7 @@ body {
 	{% csrf_token %}
 
 	<p style="width:50%;" class="center">
-		{{ form.username.label|add_class:''}}
+		{{ form.username.label}}
 		{{ form.username|add_class:'w3-input' }} 
 		{{ form.password.label }}
 		{{ form.password|add_class:'w3-input' }}
