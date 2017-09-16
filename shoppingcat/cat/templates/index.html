@@ -1,0 +1,132 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src="jquery-3.2.1.min.js"></script>
+
+	<script>
+
+
+function on_closet() {
+	document.getElementById("myRecs").style.display = "none";
+	document.getElementById("myInsps").style.display = "none";
+    document.getElementById("myCloset").style.display = "block";
+}
+
+function on_rec() {
+	document.getElementById("myRecs").style.display = "none";
+	document.getElementById("myCloset").style.display = "none";
+    document.getElementById("myRecs").style.display = "block";
+}
+
+function on_inspiration() {
+	document.getElementById("myRecs").style.display = "none";
+	document.getElementById("myCloset").style.display = "none";
+    document.getElementById("myInsps").style.display = "block";
+}
+
+function off() {
+    document.getElementById("myCloset").style.display = "none";
+    document.getElementById("myRecs").style.display = "none";
+	document.getElementById("myInsps").style.display = "none";
+}
+
+	</script>
+
+	<style>
+
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 350px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #fff; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #34AE95;
+    display: block;
+    transition: 0.3s
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover, .offcanvas a:focus{
+    color: #E18798;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+body {
+    background-size: 40%;
+    background-color: #cccccc;
+}
+
+.overlay_content {
+	position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 60%; /* Full height (cover the whole page) */
+    top: 20%;
+    background-color: rgba(255,255,255,0.8); /* Black background with opacity */
+    z-index: 0; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
+
+</style>
+</head>
+
+
+<body background="{% static 'Untitled-1.png' %}">
+
+<div id="mySidenav" class="sidenav">
+  <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+  <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
+  <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
+  <a href="#" onclick="on_rec()" class="my_recs">My Recommendations</a>
+  <a href="#" onclick="on_inspiration()" class="my_inspirations">My Inspirations</a>
+  <a href="#">Log out</a>
+</div>
+
+<!-- Use any element to open the sidenav -->
+<!--<span onclick="openNav()">open</span>-->
+
+<!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
+<div id="main">
+
+  <div id="myCloset" class="overlay_content w3-twothird"></div>
+  <div id="myRecs" class="overlay_content w3-twothird"></div>
+  <div id="myInsps" class="overlay_content w3-twothird"></div>
+</div>
+</body>
+</html>
