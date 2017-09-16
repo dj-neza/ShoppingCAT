@@ -18,3 +18,11 @@ class SignIn(forms.Form):
 		if not user or not user.is_active:
 			raise forms.ValidationError("Incorrect username or password")
 		return self.cleaned_data
+
+
+class LoadInspirationImage(forms.ModelForm):
+	class Meta: 
+		model = Inspiration
+		fields = [
+			'image'
+		]
