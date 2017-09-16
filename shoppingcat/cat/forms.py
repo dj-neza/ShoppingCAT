@@ -12,6 +12,8 @@ class SignIn(forms.Form):
 	def clean(self):
 		username = self.cleaned_data.get('username')
 		password = self.cleaned_data.get('password')
+
+		user = authenticate(username=username, password=password)
 		
 		if not user or not user.is_active:
 			raise forms.ValidationError("Incorrect username or password")
