@@ -1,4 +1,6 @@
+{% load widget_tweaks %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +21,13 @@ body {
     background-color: #cccccc;
 }
 
+.center {
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%,50%);
+    position: absolute;
+}
+
 
 </style>
 </head>
@@ -29,17 +38,15 @@ body {
 <div id="main">
 </div>
 
-<form action="" method="POST">
+<form action="" method="POST" class="w3-container">
 	{% csrf_token %}
-	<p>
-		{{ form.username.label }}
-		{{ form.username }} 
-	</p>
-				
-	<p>
+
+	<p style="width:50%;" class="center">
+		{{ form.username.label|add_class:''}}
+		{{ form.username|add_class:'w3-input' }} 
 		{{ form.password.label }}
-		{{ form.password }}
-	</p>
+		{{ form.password|add_class:'w3-input' }}
+	
 
 	{% if form.errors %}
 		{% for field in form %}
@@ -55,8 +62,10 @@ body {
 		    </div>
 		{% endfor %}
 	{% endif %}
+	<br>
 
-	<input type="submit" value="Sign in" />
+	<input type="submit" value="Sign in" class="w3-button w3-white" />
+</p>
 				
 </form>
 

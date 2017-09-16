@@ -1,3 +1,4 @@
+{% load widget_tweaks %}
 {%load static%}
 <!DOCTYPE html>
 <html>
@@ -63,7 +64,8 @@ function off() {
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover, .offcanvas a:focus{
-    color: #E18798;
+    background-color: #E18798;
+    color: #fff;
 }
 
 /* Position and style the close button (top right corner) */
@@ -110,7 +112,7 @@ body {
 <body background="{% static 'Untitled-1.png' %}">
 
 <div id="mySidenav" class="sidenav">
-  <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>-->
+  <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>--><br><br><br>
   <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
   <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
   <a href="#" onclick="on_rec()" class="my_recs">My Recommendations</a>

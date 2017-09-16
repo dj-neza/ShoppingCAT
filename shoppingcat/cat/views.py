@@ -6,10 +6,10 @@ from .forms import *
 
 @csrf_protect
 def home(request):
-	if request.user.is_authenticated():
-		return render(request, 'index.html')
+	#if request.user.is_authenticated():
+	return render(request, 'index.html')
 
-	return render(request, 'home.html')
+	#return render(request, 'home.html')
 
 # sign in
 @csrf_protect
