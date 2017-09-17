@@ -10,6 +10,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from .serializers import MyClothingSerializer, RecommendationSerializer, InspirationSerializer
 from cat.models import MyClothing, Recommendation, Inspiration
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name = "dhqd5qhlk",
+    api_key = "423479666628262",
+    api_secret = "ou30z6O3KL46XANlIOZ3JxiWzbE"
+)
 
 class CreateView(generics.ListCreateAPIView):
     """This class defines the create behavior of our rest api."""
@@ -30,11 +39,16 @@ class InspirationList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        print(request.query_params)
-        serializer = InspirationSerializer(data=request.data)
+        print(request.data)
+        lal = cloudinary.uploader.upload(request.data['image'])
+        print(lal['secure_url'])
+        #user = User.objects.get(id=1)
+        #insp = Inspiration(user=user, image=lal['secure_url'])
+        serializer = InspirationSerializer(data={"user": 1, "image": lal['secure_url']})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # DOBIS INSPIRATION PREK ID-JA
