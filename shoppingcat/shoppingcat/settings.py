@@ -16,8 +16,9 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ENV_PATH = os.path.abspath(os.path.dirname(__file__))
-MEDIA_ROOT = os.path.join(ENV_PATH, 'inspirations/')
-MEDIA_URL = "inspirations/"
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'static')
+#MEDIA_URL = "shoppingcat/static/"
+print(BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cat',
     'widget_tweaks',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [

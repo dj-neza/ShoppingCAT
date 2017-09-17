@@ -23,7 +23,7 @@ class MyClothing(Clothing):
 
 class Inspiration(models.Model):
 	user = models.ForeignKey('auth.User')
-	image = models.FileField(upload_to='inspirations/')
+	image = models.URLField()
 
 
 class Recommendation(Clothing):

@@ -2,6 +2,16 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name = "dhqd5qhlk",
+    api_key = "423479666628262",
+    api_secret = "ou30z6O3KL46XANlIOZ3JxiWzbE"
+)
+
 
 from .forms import *
 
@@ -19,8 +29,22 @@ def home(request):
 	if request.user.is_authenticated():
 		user = User.objects.get(username=request.user.username)
 		c, r, i = get_user_data(user)
-		
-		return render(request, 'index.html', {'name': request.user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
+		form = LoadInspirationImage()
+		if request.method == 'POST':
+			form = LoadInspirationImage(request.POST, request.FILES)
+			print(form)
+			if form.is_valid():
+				cl = form.cleaned_data
+				print(cl)
+				lal = cloudinary.uploader.upload(cl['image'])
+				print(lal['secure_url'])
+				newInsp = Inspiration(
+					image=lal['secure_url'],
+					user=request.user)
+				newInsp.save()
+			else:
+				print("Photo not saved ")
+		return render(request, 'index.html', {'name': request.user.first_name, 'form': form, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 	# user not signed in
 	else:
@@ -38,7 +62,21 @@ def index(request):
 		c, r, i = get_user_data(user)
 		for ind in i:
 			print(ind)
-		return render(request, 'index.html', {'name': request.user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
+		form = LoadInspirationImage()
+		if request.method == 'POST':
+			form = LoadInspirationImage(request.POST, request.FILES)
+			if form.is_valid():
+				cl = form.cleaned_data
+				print(cl)
+				lal = cloudinary.uploader.upload(cl['image'])
+				print(lal['secure_url'])
+				newInsp = Inspiration(
+					image=lal['secure_url'],
+					user=request.user)
+				newInsp.save()
+			else:
+				print("Photo not saved ")
+		return render(request, 'index.html', {'name': request.user.first_name, 'form': form, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 	else:
 		if request.method == "POST":
