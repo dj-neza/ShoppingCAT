@@ -68,7 +68,7 @@ body {
 
 .overlay_content {
 	position: fixed; /* Sit on top of the page content */
-    display: none; /* Hidden by default */
+    display: block; /* Hidden by default */
     width: 100%; /* Full width (cover the whole page) */
     height: 60%; /* Full height (cover the whole page) */
     top: 20%;
@@ -87,7 +87,7 @@ body {
     <p>Hello, {{ name }}</p>
   <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>--><br><br><br>
   <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
-  <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
+  <a href="{% url 'index' %}" class="my_clothes">My Closet</a>
   <a href="{% url 'loadRecs' %}" onclick="on_rec()" class="my_recs">My Recommendations</a>
   <a href="{% url 'loadInspirationImage' %}" class="my_inspirations">My Inspirations</a>
   <a href="{% url 'log_out' %}">Log out</a>
@@ -98,6 +98,13 @@ body {
 
 <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
 <div id="main">
+
+    <div id="myRecs" style="margin-left:400px;" class="overlay_content w3-twothird">
+        {% for r in recommendations %}
+            <p>{{r.name}}</p>
+            <img src="{{r.imageURL}}"/>
+        {% endfor %}
+  </div>
 
   
 </div>

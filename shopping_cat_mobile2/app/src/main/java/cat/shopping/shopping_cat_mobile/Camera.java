@@ -36,6 +36,9 @@ import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.cloudinary.utils.ObjectUtils;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -44,7 +47,10 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 public class Camera extends AppCompatActivity {
         private static final String TAG = "AndroidCameraApi";
         private Button takePictureButton;
@@ -68,6 +74,8 @@ public class Camera extends AppCompatActivity {
         private boolean mFlashSupported;
         private Handler mBackgroundHandler;
         private HandlerThread mBackgroundThread;
+        private Map config;
+        private String picture_url;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -83,6 +91,10 @@ public class Camera extends AppCompatActivity {
                     takePicture();
                 }
             });
+
+            config = new HashMap();
+            config.put("cloud_name", "dhqd5qhlk");
+            MediaManager.init(this, config);
         }
         TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
             @Override
@@ -124,6 +136,10 @@ public class Camera extends AppCompatActivity {
             @Override
             public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
                 super.onCaptureCompleted(session, request, result);
+                String requestId = MediaManager.get().upload(file).unsigned("sample_preset").dispatch();
+                picture_url = MediaManager.get().url().generate("abcfrmo8zul1mafopawefg.jpg");
+                //cloudinary.uploader().upload(file,
+                //        ObjectUtils.asMap("public_id", "sample_woman"));
                 Toast.makeText(Camera.this, "Saved:" + file, Toast.LENGTH_SHORT).show();
                 createCameraPreview();
             }

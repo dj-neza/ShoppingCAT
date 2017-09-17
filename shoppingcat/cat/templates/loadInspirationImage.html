@@ -87,8 +87,8 @@ body {
     <p>Hello, {{ name }}</p>
   <!--<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>--><br><br><br>
   <a href="#" onclick="off()" class="shopping_cat">Shopping Cat</a>
-  <a href="#" onclick="on_closet()" class="my_clothes">My Closet</a>
-  <a href="#" onclick="on_rec()" class="my_recs">My Recommendations</a>
+ <a href="{% url 'index' %}" class="my_clothes">My Closet</a>
+  <a href="{% url 'loadRecs' %}" onclick="on_rec()" class="my_recs">My Recommendations</a>
   <a href="{% url 'loadInspirationImage' %}" class="my_inspirations">My Inspirations</a>
   <a href="{% url 'log_out' %}">Log out</a>
 </div>
@@ -113,9 +113,14 @@ body {
         </div>
             <!-- ADD -->
 
-            <input type="submit" value="LOAD" style="margin-left: 40%" />            
+            
 
-        </form></p>
+       
+        {% for i in inspirations %}
+            <p>mjaw</p>
+            <img src="{{i.image}}"/>
+        {% endfor %}
+  </div>
         <!--<p class="w3-container" style="margin-left: 40%"><input id="picture" type="text">
         <button onclick="api()">ANALYZE</button>
         <div id="productName">Product name: </div>
