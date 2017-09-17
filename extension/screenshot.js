@@ -25,8 +25,8 @@ function setScreenshotUrl(url) {
 
 document.getElementById('buttons').onclick = function (event) {
 	var e = event || window.event;
-    var target = e.target || e.srcElement;
-   	var result;
+    	var target = e.target || e.srcElement;
+   	var result, result2;
 	var input;
 	var data;
 	result = cropper["getCroppedCanvas"]('{ "maxWidth": 4096, "maxHeight": 4096 }');
@@ -47,16 +47,21 @@ document.getElementById('buttons').onclick = function (event) {
 
 	//console.log(img);
 
-	$.ajax({
-	  type: "POST",
-	  crossDomain: true,
-	  url: "http://localhost:8000/capi/inspiration/",
-	  data: result.toDataURL("image/png"),
-	  dataType: "form-data", 
-	  //contentType:false,
-      //cache: false,
-      processData: false,
+	result2 = result.toBlob(function (blob) {
+		var formData = new FormData();
+		formData.append('image', blob);
+		formData.append('user', 1);
+		$.ajax("http://localhost:8000/capi/inspiration/", {
+		  method: "POST",
+		  data: formData,
+		  processData: false,
+		  contentType: false,
+		  success: function() {console.log('SUCCESS!');},
+		  error: function() {console.log('Upload error');}
+		});
 	});
+
+	
 
 	/*$.post("http://localhost:8000/capi/inspiration/",
     {

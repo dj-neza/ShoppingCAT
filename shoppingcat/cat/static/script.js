@@ -1,16 +1,13 @@
 var style_me_objects = [];
+var similar_objects = [];
 
 function api(imgurl) {
-	//var imgurl = $('#picture').val();
-	//console.log(imgurl);
 	style_me_objects = [];
 	$("#pop2_objects").empty();
 	var client = new HttpClient();
     client.post(imgurl, function(response) {
         var object = JSON.parse(response);
-        //console.log(object);
         returnProduct(object);
-        console.log(style_me_objects);
 
         for (var o = 0; o < style_me_objects.length; o++) {
         	$("#pop2_objects").append("\
@@ -24,6 +21,7 @@ function api(imgurl) {
     });
 	
 }
+<<<<<<< HEAD
 
 function odpri(stranUrl) {
 	window.open(stranUrl);
@@ -31,6 +29,10 @@ function odpri(stranUrl) {
 
 function simil() {
 	var sku = "PC721D05G-Q11";
+=======
+function simil(sku) {
+	//var sku = "PC721D05G-Q11";
+>>>>>>> 72f49493ffc562ba02ced6fe8f08e8077ad01619
 	var url = "http://www.fashwell.com/api/hackzurich/v1/similarity/";
 	url += sku;
 	url += "/";
@@ -121,6 +123,10 @@ function returnProduct(object) {
 
 function style_me_button(imgurl) {
 	api(imgurl);
+}
+
+function similar_button(sku) {
+	simil(sku);
 }
 
 /*
