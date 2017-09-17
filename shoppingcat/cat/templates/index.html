@@ -196,7 +196,11 @@ body {
                 <div style="text-decoration-color: #34AE95; white-space: initial;">{{r.name}}</div>
                 <div><img src="{{r.imageURL}}"/></div>
                 <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
+<<<<<<< HEAD
 
+=======
+                <button id="{{r.imageURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >WISHLIST</button>
+>>>>>>> origin/master
                 <button id="{{r.sku}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="div_show('pop1')">SHOW SIMILAR</button>
             </div>
         {% endfor %}
@@ -206,20 +210,21 @@ body {
         {% for i in inspirations %}
             <div style="display:inline-block; min-width: 35%; background-color: white; margin: 5px; padding: 5px; margin-top: 6%;">
                 <img src=" {{i.image}}" style="max-width: 30%;"/>
+<<<<<<< HEAD
                 <div><button class="style_me_button" id="{{i.id}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="style_me_button('{{i.image}}'); div_show('pop2')">STYLE ME LIKE THIS</button></div>
+=======
+                <div><button id="{{i.image}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="div_show('pop2')">STYLE ME LIKE THIS</button></div>
+>>>>>>> origin/master
             </div>
         {% endfor %}
         </div>
         <div style="margin: 5px;">
-        <!-- upload FILE -->
-        <p class="w3-container" >
-        <form method="post" enctype="multipart/form-data">
-            <table border="0" style="margin-left: 40%">
+            <form method="post" enctype="multipart/form-data" novalidate>
                 {% csrf_token %}
-                {{ form }}
-            </table>
-        <input type="submit" value="ADD INSPIRATION" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" /> 
-        </form></p>
+                {{ form.label }}
+                {{ form.image }}
+            <input type="submit" value="ADD INSPIRATION" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" /> 
+            </form>
         </div>
   </div>
 
