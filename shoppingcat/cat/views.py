@@ -29,7 +29,6 @@ def home(request):
 	if request.user.is_authenticated():
 		user = User.objects.get(username=request.user.username)
 		c, r, i = get_user_data(user)
-		form = LoadInspirationImage()
 		if request.method == 'POST':
 			form = LoadInspirationImage(request.POST, request.FILES)
 			print(form)
@@ -44,12 +43,14 @@ def home(request):
 				newInsp.save()
 			else:
 				print("Photo not saved ")
+		else:
+			form = LoadInspirationImage()
 		return render(request, 'index.html', {'name': request.user.first_name, 'form': form, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 	# user not signed in
 	else:
-		form = SignIn()
-		return render(request, 'home.html', {'form': form})
+		form2 = SignIn()
+		return render(request, 'home.html', {'form2': form2})
 
 
 # sign in
@@ -80,10 +81,10 @@ def index(request):
 
 	else:
 		if request.method == "POST":
-			form = SignIn(request.POST or None)
-
-			if form.is_valid():
-				data = form.cleaned_data
+			form2 = SignIn(request.POST or None)
+			form = LoadInspirationImage()
+			if form2.is_valid():
+				data = form2.cleaned_data
 				username = data["username"]
 				password = data["password"]
 				user = authenticate(username=username, password=password)
@@ -91,12 +92,12 @@ def index(request):
 					login(request, user)
 					user = User.objects.get(username=request.user.username)
 					c, r, i = get_user_data(user)
-					return render(request, 'index.html', {'name': user.first_name, 'clothes': c, 'recommendations': r, 'inspirations': i})
+					return render(request, 'index.html', {'name': user.first_name, 'form': form, 'clothes': c, 'recommendations': r, 'inspirations': i})
 
 		else:
-			form = SignIn()
+			form2 = SignIn()
 
-		return render(request, 'home.html', {'form': form})
+		return render(request, 'home.html', {'form2': form2})
 
 # log out
 def log_out(request):

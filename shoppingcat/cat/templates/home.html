@@ -42,21 +42,21 @@ body {
 	{% csrf_token %}
 
 	<p style="width:50%;" class="center">
-		{{ form.username.label}}
-		{{ form.username|add_class:'w3-input' }} 
-		{{ form.password.label }}
-		{{ form.password|add_class:'w3-input' }}
+		{{ form2.username.label}}
+		{{ form2.username|add_class:'w3-input' }} 
+		{{ form2.password.label }}
+		{{ form2.password|add_class:'w3-input' }}
 	
 
-	{% if form.errors %}
-		{% for field in form %}
+	{% if form2.errors %}
+		{% for field in form2 %}
 		    {% for error in field.errors %}
 		        <div>
 		            <strong>{{ error|escape }}</strong>
 		        </div>
 		    {% endfor %}
 		{% endfor %}
-		{% for error in form.non_field_errors %}
+		{% for error in form2.non_field_errors %}
 		    <div >
 		        <strong>{{ error|escape }}</strong>
 		    </div>

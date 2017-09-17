@@ -20,4 +20,4 @@ class SignIn(forms.Form):
 		return self.cleaned_data
 
 class LoadInspirationImage(forms.Form):
-	image = forms.FileField()
+	image = forms.FileField(label='Upload your inspiration file')
