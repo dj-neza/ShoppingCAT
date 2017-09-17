@@ -30,6 +30,7 @@ class InspirationList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
+        print(request.query_params)
         serializer = InspirationSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

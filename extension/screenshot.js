@@ -12,26 +12,61 @@ function setScreenshotUrl(url) {
 	  minCropBoxWidth: 200,
 	  minCropBoxHeight: 200,
 	  crop: function(e) {
-	    console.log(e.detail.x);
+	    /*console.log(e.detail.x);
 	    console.log(e.detail.y);
 	    console.log(e.detail.width);
 	    console.log(e.detail.height);
 	    console.log(e.detail.rotate);
 	    console.log(e.detail.scaleX);
-	    console.log(e.detail.scaleY);
+	    console.log(e.detail.scaleY);*/
 	  }
 	});
 }
 
 document.getElementById('buttons').onclick = function (event) {
 	var e = event || window.event;
-    	var target = e.target || e.srcElement;
+    var target = e.target || e.srcElement;
    	var result;
-    	var input;
-    	var data;
-    	result = cropper["getCroppedCanvas"]('{ "maxWidth": 4096, "maxHeight": 4096 }');
-    	console.log(result);
-    	var canvasData = result.toDataURL();
+	var input;
+	var data;
+	result = cropper["getCroppedCanvas"]('{ "maxWidth": 4096, "maxHeight": 4096 }');
+	console.log(result);
+	var canvasData = result.toDataURL();
+
+
+	var img = new Image();
+	img.src = result;
+	var formData = new FormData();
+	//console.log(result);
+	//console.log(canvasData);
+	//console.log(img.src);
+	formData.append('user', 1);
+	formData.append('image', result.toDataURL("image/png"));
+
+	//console.log(JSON.stringify({"user": 1, "image": result.toDataURL("image/png")}));
+
+	//console.log(img);
+
+	$.ajax({
+	  type: "POST",
+	  crossDomain: true,
+	  url: "http://localhost:8000/capi/inspiration/",
+	  data: result.toDataURL("image/png"),
+	  dataType: "form-data", 
+	  //contentType:false,
+      //cache: false,
+      processData: false,
+	});
+
+	/*$.post("http://localhost:8000/capi/inspiration/",
+    {
+        user: 1,
+        image: ""
+    },
+    function(data, status){
+        alert("Data: " + data + "\nStatus: " + status);
+    });*/
+
 	document.getElementById("cropped").innerHTML += '<img src="' + canvasData + '">';
 };
 
