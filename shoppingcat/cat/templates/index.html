@@ -195,13 +195,8 @@ body {
             <div style="display:inline-block; min-width: 35%; background-color: white; margin: 5px; padding: 5px; margin-top: 6%;">
                 <div style="text-decoration-color: #34AE95; white-space: initial;">{{r.name}}</div>
                 <div><img src="{{r.imageURL}}"/></div>
-<<<<<<< HEAD
                 <a href="{% url 'addCloset' r.id %}"> <button onclick="window.open('{{r.productURL}}')" id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button></a>
-                <button id="{{r.sku}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="div_show('pop1')">SHOW SIMILAR</button>
-=======
-                <button id="{{r.productURL}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" >BUY</button>
                 <button id="{{r.sku}}" style="margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;" onclick="similar_button('{{r.SKUcode}}'); div_show('pop1')">SHOW SIMILAR</button>
->>>>>>> 72f49493ffc562ba02ced6fe8f08e8077ad01619
             </div>
         {% endfor %}
   </div>

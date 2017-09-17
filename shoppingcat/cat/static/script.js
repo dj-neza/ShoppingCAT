@@ -21,18 +21,13 @@ function api(imgurl) {
     });
 	
 }
-<<<<<<< HEAD
 
 function odpri(stranUrl) {
 	window.open(stranUrl);
 }
 
-function simil() {
-	var sku = "PC721D05G-Q11";
-=======
 function simil(sku) {
 	//var sku = "PC721D05G-Q11";
->>>>>>> 72f49493ffc562ba02ced6fe8f08e8077ad01619
 	var url = "http://www.fashwell.com/api/hackzurich/v1/similarity/";
 	url += sku;
 	url += "/";
