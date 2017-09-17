@@ -106,3 +106,45 @@ def log_out(request):
 		logout(request)
 
 	return redirect('index')
+
+def addCloset(request, r_id):
+	# get rec object
+	# save it to closet
+	# delete it from rec
+	user = User.objects.get(id=request.user.id)
+
+	obleka = Recommendation.objects.get(id=r_id)
+	print(obleka)
+	nova_obleka = MyClothing(
+		name = obleka.name,
+		category = obleka.category,
+		productURL = obleka.productURL,
+		imageURL = obleka.imageURL,
+		price = obleka.price,
+		SKUcode=obleka.SKUcode,
+		user = user
+	)
+	nova_obleka.save()
+	obleka.delete()
+	print(nova_obleka.name)
+	return redirect('index')
+
+def addWish(request, name, category, productURL, imageURL, price, SKUcode):
+	# get all parameters
+	# create recommendation
+	user = User.objects.get(id=request.user.id)
+	inspiration = Inspiration.objects.first()
+
+	obleka = Recommendation(
+		name=name,
+		category=category,
+		productURL=productURL,
+		imageURL=imageURL,
+		price=price,
+		SKUcode=SKUcode,
+		user=user,
+		inspiration=inspiration)
+	obleka.save()
+	
+	return redirect('index')
+

@@ -17,13 +17,18 @@ function api(imgurl) {
         		<div style='display: inline-block; background-color: white; margin: 5px; padding: 5px; margin-top: 6%; min-width: 30%;'> \
                     <div style='text-decoration-color: #34AE95; white-space: initial;'>" + style_me_objects[o].productName + "</div> \
                     <div><img src='" + style_me_objects[o].image + "'/></div> \
-                    <button style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' >BUY</button> \
-                    <button style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' >WISHLIST</button> \
+                    <button onClick=window.open('"+style_me_objects[o].product+"') style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' >BUY</button> \
+                    <button style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' ><a href={% url 'addWish' '"+style_me_objects[o].productName+"' '"+style_me_objects[o].brand+"' '"+style_me_objects[o].product+"' '"+style_me_objects[o].image+"' '"+style_me_objects[o].price+"' '"+style_me_objects[o].sku+"' %}>WISHLIST</a></button> \
                 </div>");
         }
     });
 	
 }
+
+function odpri(stranUrl) {
+	window.open(stranUrl);
+}
+
 function simil() {
 	var sku = "PC721D05G-Q11";
 	var url = "http://www.fashwell.com/api/hackzurich/v1/similarity/";
