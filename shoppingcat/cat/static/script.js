@@ -18,6 +18,7 @@ function api(imgurl) {
                     <div style='text-decoration-color: #34AE95; white-space: initial;'>" + style_me_objects[o].productName + "</div> \
                     <div><img src='" + style_me_objects[o].image + "'/></div> \
                     <button style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' >BUY</button> \
+                    <button style='margin: 5px; border-radius: 4px; background-color: #34AE95; border:0px solid #34AE95;' >WISHLIST</button> \
                 </div>");
         }
     });
